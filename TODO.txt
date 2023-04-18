@@ -1,4 +1,3 @@
 страницы:
     /edit_post/<int:id> (handler + html)
-    /post/<int:id> (handler + html)
     /register (html + form)

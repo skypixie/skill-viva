@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="post-detail">
+    <p>Автор: {{ post.author.nickname }}</p>
+
+    <h2>{{ post.heading }}</h2>
+
+    <p>
+        {{ post.content }}
+    </p>
+</div>
+{% endblock %}
