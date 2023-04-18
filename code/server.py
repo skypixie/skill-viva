@@ -9,7 +9,7 @@ from data.users import User
 from data.posts import Post
 from data.categories import Category
 from forms.login_form import LoginForm
-# from forms.registration_form import RegistrationForm
+from forms.registration_form import RegistrationForm
 from forms.create_post import AddPostForm
 # еще не сделаны
 from Text_Matching import TextMatching
@@ -87,7 +87,11 @@ def registrate():
         # email is unique
         if db_sess.query(User).filter(User.email == form.email.data).first():
             return render_template('register.html', title='Регистрация',
-                                   message='Такой пользователь уже существует')
+                                   message='Такой email уже существует')
+        
+        if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
+            return render_template('register.html', title='Регистрация',
+                                   message='Такой nickname уже существует')
         
         user.nickname = form.nickname.data
         user.email = form.email.data
