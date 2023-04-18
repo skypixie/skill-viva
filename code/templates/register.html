@@ -38,6 +38,17 @@
             {% endfor %}
         </p>
 
+        <!-- Password Again -->
+        <p>
+            {{ form.password_again.label }}
+            {{ form.password_again(class='form-control', type='password') }}<br>
+            {% for error in form.password_again.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
         <!-- Remember me -->
         <p>
             {{ form.remember_me() }}{{ form.remember_me.label }}
