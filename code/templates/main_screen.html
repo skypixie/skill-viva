@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="main_screen">
+
+        <!-- FILTER -->
+        <div class="filter">
+            <div class="header">
+                <h2>Фильтр</h2>
+            </div>
+            <div class="check_box_filter">
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="programmer">
+                    <label class="form-check-label" for="programmer">
+                        Программирование
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="design">
+                    <label class="form-check-label" for="design">
+                        Дизайн
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="english">
+                    <label class="form-check-label" for="english">
+                        Английский язык
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="science">
+                    <label class="form-check-label" for="science">
+                        Наука
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="finance">
+                    <label class="form-check-label" for="finance">
+                        Финансы
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="marketing">
+                    <label class="form-check-label" for="marketing">
+                        Маркетинг
+                    </label>
+                </div>
+                <div class="check_box">
+                    <input class="form-check-input" type="checkbox" value="" id="jurisprudence">
+                    <label class="form-check-label" for="jurisprudence">
+                        Юриспруденция
+                    </label>
+                </div>
+            </div>
+            <button type="button" class="btn btn-dark" id="filter_button">
+                Применить фильтр
+            </button>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            {% for post in posts %}
+                <div class="block_post">
+                    <div class="header">
+                        <h3>
+                            <a href="/post/{{ post.id }}" class="link">
+                                {{ post.header }}
+                            </a>
+                        </h3>
+                    </div>
+                    <div class="info">
+                        <div class="author">
+                            <h4>
+                                <a href="/profile/{{ post.author.id }}" class="link">
+                                    {{ post.author.nickname }}
+                                </a>
+                            </h4>
+                        </div>
+                        <div class="topic">
+                            <h4>
+                                {{ post.category }}
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}
