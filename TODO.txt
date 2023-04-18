@@ -1,5 +1,4 @@
 страницы:
-    /add_post (handler)
     /edit_post/<int:id> (handler + html)
     /post/<int:id> (handler + html)
     /register (html + form)

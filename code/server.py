@@ -2,12 +2,15 @@ import datetime
 from flask import Flask, render_template, redirect, abort
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
+import support
+
 from data import db_session
 from data.users import User
 from data.posts import Post
+from data.categories import Category
 from forms.login_form import LoginForm
 # from forms.registration_form import RegistrationForm
-# from form.add_post_form import AddPostForm
+from forms.create_post import AddPostForm
 # еще не сделаны
 from Text_Matching import TextMatching
 
@@ -20,6 +23,15 @@ login_manager = LoginManager(app)
 login_manager.init_app(app)
 
 BASE_CSS_FILES = ['main_style']
+CATEGORIES = [
+        'Программирование',
+        'Дизайн',
+        'Английский язык',
+        'Наука',
+        'Финансы',
+        'Маркетинг',
+        'Юриспруденция',
+    ]
 
 
 @login_manager.user_loader
@@ -106,8 +118,8 @@ def profile(nickname):
 # CREATE A POST
 @app.route('/new_post', methods=['GET', 'POST'])
 def create_post():
-    form = AddPostForm()
-    if form.validate_on_sumbit():
+    form = AddPostForm(categories=CATEGORIES)
+    if form.validate_on_submit():
         text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
                                     topic=form.category.data)
@@ -134,10 +146,18 @@ def create_post():
 
 @app.route('/posts')
 def main():
+    db_sess = db_session.create_session()
+    all_posts = db_sess.query(Post).all()
     return render_template('main_screen.html',
-                           css_files=BASE_CSS_FILES + ['main_screen_style'])
+                           css_files=BASE_CSS_FILES + ['main_screen_style'],
+                           posts=all_posts)
 
 
 if __name__ == '__main__':
     db_session.global_init('db/database.db')
+
+    # inserting all categories into the database
+    support.insert_categories_into_db(db_session.create_session(),
+                                      Category,
+                                      CATEGORIES)
     app.run()
