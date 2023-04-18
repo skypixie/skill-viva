@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-center">Создание поста</h1>
+<div>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <!-- CATEGORY -->
+        <p>
+            {{ form.category.label }}
+            {{ form.category(class='form-control') }}
+        </p>
+
+        <!-- HEADING -->
+        <p>
+            {{ form.heading.label }}
+            {{ form.heading(class='form-control') }}
+            {% for error in form.heading.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <!-- CONTENT -->
+        <p>
+            {{ form.content.label }}
+            {{ form.content(class='form-control') }}
+            {% for error in form.content.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+        
+        <p>
+            {{ message }}
+        </p>
+    </form>
+</div>
+{% endblock %}

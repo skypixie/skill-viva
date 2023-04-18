@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="text-center">Авторизация</h1>
+<div class="login-container">
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <!-- Email -->
+        <p>
+            {{ form.email.label }}
+            {{ form.email(class='form-control') }}<br>
+            {% for error in form.email.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <!-- Password -->
+        <p>
+            {{ form.password.label }}
+            {{ form.password(class='form-control', type='password') }}<br>
+            {% for error in form.password.errors %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error }}
+                </div>
+            {% endfor %}
+        </p>
+
+        <!-- Remember me -->
+        <p>
+            {{ form.remember_me() }}{{ form.remember_me.label }}
+        </p>
+
+        <!-- Submit -->
+        <p>
+            {{ form.submit(type='submit', class='btn btn-dark') }}
+        </p>
+
+        {{ message }}
+
+    </form>
+</div>
+{% endblock %}
