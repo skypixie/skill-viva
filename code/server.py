@@ -144,8 +144,21 @@ def create_post():
                            form=form)
 
 
+# DETAIL POST VIEW
+@app.route('/posts/<int:id>')
+def post_detail(id):
+    db_sess = db_session.create_session()
+    post = db_sess.query(Post).get(id)
+    if not post:
+        return render_template('404.html', title='404')
+    
+    return render_template('post_detail.html',
+                           title=post.header,
+                           post=post)
+
+
 @app.route('/posts')
-def main():
+def index():
     db_sess = db_session.create_session()
     all_posts = db_sess.query(Post).all()
     return render_template('main_screen.html',
