@@ -102,7 +102,7 @@ def registrate():
 
         return redirect('/login')
         
-    return render_template('registration.html',
+    return render_template('register.html',
                            title='Регистрация',
                            form=form)
 
