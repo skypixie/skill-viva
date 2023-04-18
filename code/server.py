@@ -11,7 +11,6 @@ from data.categories import Category
 from forms.login_form import LoginForm
 from forms.registration_form import RegistrationForm
 from forms.create_post import AddPostForm
-# еще не сделаны
 from Text_Matching import TextMatching
 
 
@@ -73,25 +72,31 @@ def login():
 
 
 # REGISTRATION
-app.route('/registrate', methods=['GET', 'POST'])
+@app.route('/registrate', methods=['GET', 'POST'])
 def registrate():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User()
         # 2 passwords are identic
         if form.password.data != form.password_again.data:
-            return render_template('register.html', title='Регистрация',
-                                   message='Пароли не совпадают')
+            return render_template('register.html',
+                                   title='Регистрация',
+                                   message='Пароли не совпадают',
+                                   css_files=BASE_CSS_FILES + ['login'])
         db_sess = db_session.create_session()
 
         # email is unique
         if db_sess.query(User).filter(User.email == form.email.data).first():
-            return render_template('register.html', title='Регистрация',
-                                   message='Такой email уже существует')
+            return render_template('register.html',
+                                   title='Регистрация',
+                                   message='Такой email уже существует',
+                                   css_files=BASE_CSS_FILES + ['login'])
         
         if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
-            return render_template('register.html', title='Регистрация',
-                                   message='Такой nickname уже существует')
+            return render_template('register.html',
+                                   title='Регистрация',
+                                   message='Такой nickname уже существует',
+                                   css_files=BASE_CSS_FILES + ['login'])
         
         user.nickname = form.nickname.data
         user.email = form.email.data
@@ -104,7 +109,8 @@ def registrate():
         
     return render_template('register.html',
                            title='Регистрация',
-                           form=form)
+                           form=form,
+                           css_files=BASE_CSS_FILES + ['login'])
 
 
 # PROFILE
