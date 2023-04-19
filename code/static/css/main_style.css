@@ -21,4 +21,7 @@ html, body {
 
 .footer {
 	flex: 0 0 auto;
+	background-color: black;
+	color: white;
+	padding: 10vh 10vh;
 }
