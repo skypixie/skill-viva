@@ -5,14 +5,20 @@
     color: white;
 }
 
-body {
-    display: flex;
-    flex-direction: column;
+html, body {
+	height: 100%;
 }
 
-.footer{
-    margin-top: 50px;
-    padding: 5% 0 5% 0;
-    background-color: black;
-    color: white;
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	min-height: 100%;
+}
+
+.content {
+	flex: 1 0 auto;
+}
+
+.footer {
+	flex: 0 0 auto;
 }
