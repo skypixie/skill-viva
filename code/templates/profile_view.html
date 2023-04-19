@@ -1,37 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
     <div class="text-center">
-        <p>
-            {{ user.nickname }}
-            Всего постов: {{ how_many_posts }}
-        </p>
+        <h3>{{ user.nickname }}</h3>
     </div>
+    <br>
     <!-- SAME CODE AS /POSTS HAS -->
     <div class="content">
-        {% for post in posts %}
-            <div class="block_post">
-                <div class="header">
-                    <h3>
-                        <a href="/post/{{ post.id }}" class="link">
-                            {{ post.header }}
-                        </a>
-                    </h3>
-                </div>
-                <div class="info">
-                    <div class="author">
-                        <h4>
-                            <a href="/profile/{{ post[3] }}" class="link">
-                                {{ post.author.nickname }}
-                            </a>
-                        </h4>
+        {% if posts %}
+            <h4> Все посты пользователя: </h4>
+            <div class="text-center">
+                {% for post in posts %}
+                    <div class="block_post">
+                        <div class="header">
+                            <h3>
+                                <a href="/post/{{ post.id }}" class="link">
+                                    {{ post.header }}
+                                </a>
+                            </h3>
+                        </div>
+                        <div class="info">
+                            <div class="author">
+                                <h4>
+                                    <a href="/profile/{{ post[3] }}" class="link">
+                                        {{ post.author.nickname }}
+                                    </a>
+                                </h4>
+                            </div>
+                            <div class="topic">
+                                <h4>
+                                    {{ post.category }}
+                                </h4>
+                            </div>
+                        </div>
                     </div>
-                    <div class="topic">
-                        <h4>
-                            {{ post.category }}
-                        </h4>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
-        {% endfor %}
+        {% else %}
+            <p class="text-center"> У этого пользователя совсем нет постов...</p>
+        {% endif %}
     </div>
 {% endblock %}

@@ -9,7 +9,7 @@
       crossorigin="anonymous">
 
     {% for filename in css_files %}
-        <link href="static/css/{{ filename }}.css" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/' + filename + '.css') }}" rel="stylesheet">
     {% endfor %}
     <title>{{ title }}</title>
     </head>

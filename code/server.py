@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, render_template, redirect, abort
+from flask import Flask, render_template, redirect, url_for
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 import support
@@ -58,7 +58,7 @@ def login():
         # password check
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
-            return redirect('/')
+            return redirect('/posts')
         
         # email not found or wrong password
         return render_template('login.html',
@@ -116,13 +116,15 @@ def registrate():
 # PROFILE
 @app.route('/profile/<string:nickname>')
 def profile(nickname):
+    # css_files = [url_for('static', filename=f'css/{file}.css') for file in BASE_CSS_FILES]
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.nickname == nickname).first()
     if not user:
         return render_template('404.html', title='404')
     return render_template('profile_view.html',
                            title=f'@{nickname}',
-                           user=user)
+                           user=user,
+                           css_files=BASE_CSS_FILES)
 
 
 # CREATE A POST
