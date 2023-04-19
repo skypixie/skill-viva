@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 import support
@@ -116,7 +116,6 @@ def registrate():
 # PROFILE
 @app.route('/profile/<string:nickname>')
 def profile(nickname):
-    # css_files = [url_for('static', filename=f'css/{file}.css') for file in BASE_CSS_FILES]
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.nickname == nickname).first()
     if not user:
