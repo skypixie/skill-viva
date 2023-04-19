@@ -15,4 +15,4 @@
 
 Также на сайте будет проверка соответствие поста пользователя с темой, которую он выбрал(для проверки будем использовать ChatGPT API)
 
-Stack: Flask, SqlAlchemy, ChatGPT API.
+Stack: Flask, SqlAlchemy, ChatGPT API, WTForms.
