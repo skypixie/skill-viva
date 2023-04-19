@@ -11,6 +11,7 @@
     {% for filename in css_files %}
         <link href="{{ url_for('static', filename='css/' + filename + '.css') }}" rel="stylesheet">
     {% endfor %}
+    <link href="{{ url_for('static', filename='css/main_style.css') }}" rel="stylesheet">
     <title>{{ title }}</title>
     </head>
     <body>

@@ -12,10 +12,6 @@
     color: black;
 }
 
-.check_box {
-    font-size: 150%;
-}
-
 .check_box_filter {
     padding-left: 4%;
 }
@@ -68,7 +64,6 @@
 }
 
 #filter_button {
-    font-size: 150%;
     margin-left: 4%;
     margin-top: 7%;
     margin-bottom: 7%;
