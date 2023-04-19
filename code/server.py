@@ -168,6 +168,7 @@ def post_detail(id):
                            post=post)
 
 
+# MAIN PAGE
 @app.route('/posts')
 def index():
     db_sess = db_session.create_session()
