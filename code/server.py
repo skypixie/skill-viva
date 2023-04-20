@@ -82,7 +82,8 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Пароли не совпадают',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         db_sess = db_session.create_session()
 
         # email is unique
@@ -90,13 +91,15 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой email уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         
         if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой nickname уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         
         user.nickname = form.nickname.data
         user.email = form.email.data
@@ -133,6 +136,7 @@ def create_post():
     form = AddPostForm()
 
     if form.validate_on_submit():
+
         text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
                                     topic=form.category.data)
@@ -141,7 +145,8 @@ def create_post():
         try:
             if text_matcher.matching().lower() == 'нет':
                 return render_template('create_post.html',
-                                    message='Текст не соответствует выбранной категории.')
+                                       message='Текст не соответствует выбранной категории.',
+                                       form=form)
         except Exception:
             pass
 
@@ -151,7 +156,10 @@ def create_post():
         new_post.heading = form.heading.data
         new_post.content = form.content.data
 
-        # TODO: add category to the post!!!!!
+        category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
+
+        new_post.category_id = category_id
+
         current_user.posts.append(new_post)
         
         db_sess.merge(current_user)
