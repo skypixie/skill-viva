@@ -174,7 +174,30 @@ def create_post():
                            css_files=BASE_CSS_FILES + ['add_post'])
 
 
-# DETAIL POST VIEW
+# EDIT POST
+@app.route('/edit_post/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+    db_sess = db_session.create_session()
+    post = db_sess.get(Post, id)
+    if not post:
+        return render_template('404.html')
+    
+    form = AddPostForm()
+    if form.validate_on_submit():
+        pass
+
+    form.heading.data = post.heading
+    form.content.data = post.content
+    form.category.data = db_sess.query(Category).filter(Category.id == post.category_id).first()
+
+    return render_template('create_post.html',
+                           form=form,
+                           title='Edit post',
+                           css_files=BASE_CSS_FILES + ['add_post'])
+
+
+# DETAILED POST VIEW
 @app.route('/posts/<int:id>')
 @login_required
 def post_detail(id):
