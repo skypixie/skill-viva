@@ -185,11 +185,27 @@ def edit_post(id):
     
     form = AddPostForm()
     if form.validate_on_submit():
-        pass
+        text_matcher = TextMatching(api_key='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',
+                                    user_text=form.content.data,
+                                    topic=form.category.data)
+        # check via chat-gpt
+        try:
+            if text_matcher.matching().lower() == 'нет':
+                return render_template('create_post.html',
+                                       message='Текст не соответствует выбранной категории.',
+                                       form=form)
+        except Exception:
+            pass
+        post.category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
+        post.heading = form.heading.data
+        post.content = form.content.data
+        db_sess.commit()
+        
+        return redirect('/posts')
 
     form.heading.data = post.heading
     form.content.data = post.content
-    form.category.data = db_sess.query(Category).filter(Category.id == post.category_id).first()
+    form.category.data = db_sess.query(Category).filter(Category.id == post.category_id).first().category
 
     return render_template('create_post.html',
                            form=form,
@@ -207,7 +223,7 @@ def post_detail(id):
         return render_template('404.html', title='404')
     
     return render_template('post_detail.html',
-                           title=post.header,
+                           title=post.heading,
                            post=post)
 
 
