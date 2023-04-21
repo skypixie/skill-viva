@@ -36,7 +36,7 @@ CATEGORIES = [
 @login_manager.user_loader
 def load_user(user_id):
     db_sess = db_session.create_session()
-    return db_sess.query(User).get(user_id)
+    return db_sess.get(User, user_id)
 
 
 # USER LOGOUT
@@ -64,7 +64,7 @@ def login():
         return render_template('login.html',
                                message='Неправильный логин или пароль',
                                form=form,
-                               css_files=BASE_CSS_FILES)
+                               css_files=BASE_CSS_FILES + ['login'])
     return render_template('login.html',
                            form=form,
                            title='Авторизация',
@@ -82,7 +82,8 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Пароли не совпадают',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         db_sess = db_session.create_session()
 
         # email is unique
@@ -90,13 +91,15 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой email уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         
         if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой nickname уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'])
+                                   css_files=BASE_CSS_FILES + ['login'],
+                                   form=form)
         
         user.nickname = form.nickname.data
         user.email = form.email.data
@@ -115,6 +118,7 @@ def registrate():
 
 # PROFILE
 @app.route('/profile/<string:nickname>')
+@login_required
 def profile(nickname):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.nickname == nickname).first()
@@ -122,41 +126,80 @@ def profile(nickname):
         return render_template('404.html', title='404')
     return render_template('profile_view.html',
                            title=f'@{nickname}',
-                           user=user,
-                           css_files=BASE_CSS_FILES)
+                           user=user)
 
 
 # CREATE A POST
 @app.route('/new_post', methods=['GET', 'POST'])
+@login_required
 def create_post():
-    form = AddPostForm(categories=CATEGORIES)
+    form = AddPostForm()
+
     if form.validate_on_submit():
+
         text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
                                     topic=form.category.data)
         
         # check via chat-gpt
-        if text_matcher.matching().lower() == 'нет':
-            return render_template('create_post.html',
-                                   message='Текст не соответствует выбранной категории.')
+        try:
+            if text_matcher.matching().lower() == 'нет':
+                return render_template('create_post.html',
+                                       message='Текст не соответствует выбранной категории.',
+                                       form=form)
+        except Exception:
+            pass
+
         db_sess = db_session.create_session()
 
-        new_post = Post()
-        new_post.heading = form.heading.data
-        new_post.content = form.content.data
-        current_user.posts.append(new_post)
-        
-        db_sess.merge(current_user)
+        category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
+
+        new_post = Post(
+            heading=form.heading.data,
+            content=form.content.data,
+            user=current_user,
+            user_id=current_user.id,
+            category_id=category_id
+        )
+        # current_user.posts.append(new_post) - вот так вот не работает
+        # (sqlalchemy.orm.exc.DetachedInstanceError)
+
+        db_sess.add(new_post)
         db_sess.commit()
         return redirect(f'/profile/{current_user.nickname}')
 
     return render_template('create_post.html',
                            title='New Post',
-                           form=form)
+                           form=form,
+                           css_files=BASE_CSS_FILES + ['add_post'])
 
 
-# DETAIL POST VIEW
+# EDIT POST
+@app.route('/edit_post/<int:id>', methods=['GET', 'POST'])
+@login_required
+def edit_post(id):
+    db_sess = db_session.create_session()
+    post = db_sess.get(Post, id)
+    if not post:
+        return render_template('404.html')
+    
+    form = AddPostForm()
+    if form.validate_on_submit():
+        pass
+
+    form.heading.data = post.heading
+    form.content.data = post.content
+    form.category.data = db_sess.query(Category).filter(Category.id == post.category_id).first()
+
+    return render_template('create_post.html',
+                           form=form,
+                           title='Edit post',
+                           css_files=BASE_CSS_FILES + ['add_post'])
+
+
+# DETAILED POST VIEW
 @app.route('/posts/<int:id>')
+@login_required
 def post_detail(id):
     db_sess = db_session.create_session()
     post = db_sess.query(Post).get(id)

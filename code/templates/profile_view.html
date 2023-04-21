@@ -6,14 +6,14 @@
     <br>
     <!-- SAME CODE AS /POSTS HAS -->
     <div class="content">
-        {% if posts %}
+        {% if user.posts %}
             <h4> Все посты пользователя: </h4>
             <div class="text-center">
-                {% for post in posts %}
+                {% for post in user.posts %}
                     <div class="block_post">
                         <div class="header">
                             <h3>
-                                <a href="/post/{{ post.id }}" class="link">
+                                <a href="/posts/{{ post.id }}" class="link">
                                     {{ post.header }}
                                 </a>
                             </h3>
@@ -21,9 +21,7 @@
                         <div class="info">
                             <div class="author">
                                 <h4>
-                                    <a href="/profile/{{ post[3] }}" class="link">
-                                        {{ post.author.nickname }}
-                                    </a>
+                                    {{ post.user.nickname }}
                                 </h4>
                             </div>
                             <div class="topic">

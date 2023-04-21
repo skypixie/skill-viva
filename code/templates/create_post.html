@@ -1,20 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1 class="text-center">Создание поста</h1>
-<div>
+<div class="add-post">
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
 
         <!-- CATEGORY -->
         <p>
             {{ form.category.label }}
-            {{ form.category(class='form-control') }}
+            {{ form.category(class_='form-control') }}
         </p>
 
         <!-- HEADING -->
         <p>
             {{ form.heading.label }}
-            {{ form.heading(class='form-control') }}
+            {{ form.heading(class_='form-control') }}
             {% for error in form.heading.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
@@ -25,7 +25,7 @@
         <!-- CONTENT -->
         <p>
             {{ form.content.label }}
-            {{ form.content(class='form-control') }}
+            {{ form.content(class_='form-control') }}
             {% for error in form.content.errors %}
                 <div class="alert alert-danger" role="alert">
                     {{ error }}
@@ -39,7 +39,7 @@
 
         <!-- SUBMIT -->
         <p>
-            {{ form.submit(type='submit', class='btn btn-dark') }}
+            {{ form.submit(type='submit', class_='btn btn-dark') }}
         </p>
     </form>
 </div>

@@ -4,13 +4,16 @@ from wtforms.validators import DataRequired
 
 
 class AddPostForm(FlaskForm):
-    def __init__(self, categories):
-        super().__init__()
-
-        self.category = SelectField('Категория',
-                                validators=[DataRequired()],
-                                choices=categories)
-        
-        self.heading = StringField('Заголовок', validators=[DataRequired()])
-        self.content = TextAreaField('Что вы хотите написать?', validators=[DataRequired()])
-        self.submit = SubmitField('Создать')
+    category = SelectField('Категория',
+                            validators=[DataRequired()],
+                            choices=['Программирование',
+                                     'Дизайн',
+                                     'Английский язык',
+                                     'Наука',
+                                     'Финансы',
+                                     'Маркетинг',
+                                     'Юриспруденция',])
+    
+    heading = StringField('Заголовок', validators=[DataRequired()])
+    content = TextAreaField('Что вы хотите написать?', validators=[DataRequired()])
+    submit = SubmitField('Создать')
