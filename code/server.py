@@ -152,17 +152,19 @@ def create_post():
 
         db_sess = db_session.create_session()
 
-        new_post = Post()
-        new_post.heading = form.heading.data
-        new_post.content = form.content.data
-
         category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
 
-        new_post.category_id = category_id
+        new_post = Post(
+            heading=form.heading.data,
+            content=form.content.data,
+            user=current_user,
+            user_id=current_user.id,
+            category_id=category_id
+        )
+        # current_user.posts.append(new_post) - вот так вот не работает
+        # (sqlalchemy.orm.exc.DetachedInstanceError)
 
-        current_user.posts.append(new_post)
-        
-        db_sess.merge(current_user)
+        db_sess.add(new_post)
         db_sess.commit()
         return redirect(f'/profile/{current_user.nickname}')
 

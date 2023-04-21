@@ -6,10 +6,10 @@
     <br>
     <!-- SAME CODE AS /POSTS HAS -->
     <div class="content">
-        {% if posts %}
+        {% if user.posts %}
             <h4> Все посты пользователя: </h4>
             <div class="text-center">
-                {% for post in posts %}
+                {% for post in user.posts %}
                     <div class="block_post">
                         <div class="header">
                             <h3>

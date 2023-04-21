@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 class User(SqlAlchemyBase, UserMixin):
-    __tablename__ = "user"
+    __tablename__ = "users"
     id = sqlalchemy.Column(sqlalchemy.Integer, 
                            primary_key=True, autoincrement=True)
     nickname = sqlalchemy.Column(sqlalchemy.String, unique=True, nullable=False)
