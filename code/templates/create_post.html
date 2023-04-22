@@ -1,4 +1,26 @@
 {% extends 'base.html' %}
+
+{% block right_button %}
+    <div class="right_buttons">
+        <h3>
+            <a href="/new_post" class="head_link">
+                Написать пост
+            </a>
+        </h3>
+    </div>
+{% endblock %}
+
+{% block left_button %}
+    <div class="left_buttons">
+        <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
+        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
+            <h3>
+                Профиль
+            </h3>
+        </a>
+    </div>
+{% endblock %}
+
 {% block content %}
 <h1 class="text-center">Создание поста</h1>
 <div class="add-post">

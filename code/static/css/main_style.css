@@ -25,3 +25,40 @@ html, body {
 	color: white;
 	padding: 10vh 10vh;
 }
+
+.custom-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.img_profile {
+    float: left;
+    padding-right: 10px;
+}
+
+#link_with_img {
+    float: right;
+}
+
+.left_buttons {
+    margin-right: 2%;
+}
+
+.right_buttons {
+    margin-left: 2%;
+}
+
+.head_link {
+    text-decoration: none;
+    color: white;
+    transition: .3s;
+    background: linear-gradient(to right, white, white, white, white);
+    background-size: 0 3px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+}
+
+.head_link:hover {
+   background-size: 100% 4px;
+}
