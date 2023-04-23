@@ -44,7 +44,7 @@ def load_user(user_id):
 @login_required
 def logout():
     logout_user()
-    return redirect('/')
+    return redirect('/posts')
 
 
 # LOGIN
@@ -63,12 +63,10 @@ def login():
         # email not found or wrong password
         return render_template('login.html',
                                message='Неправильный логин или пароль',
-                               form=form,
-                               css_files=BASE_CSS_FILES + ['login'])
+                               form=form)
     return render_template('login.html',
                            form=form,
-                           title='Авторизация',
-                           css_files=BASE_CSS_FILES + ['login'])
+                           title='Авторизация')
 
 
 # REGISTRATION
@@ -82,7 +80,6 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Пароли не совпадают',
-                                   css_files=BASE_CSS_FILES + ['login'],
                                    form=form)
         db_sess = db_session.create_session()
 
@@ -91,14 +88,12 @@ def registrate():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой email уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'],
                                    form=form)
         
         if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой nickname уже существует',
-                                   css_files=BASE_CSS_FILES + ['login'],
                                    form=form)
         
         user.nickname = form.nickname.data
@@ -112,8 +107,7 @@ def registrate():
         
     return render_template('register.html',
                            title='Регистрация',
-                           form=form,
-                           css_files=BASE_CSS_FILES + ['login'])
+                           form=form)
 
 
 # PROFILE
@@ -170,8 +164,7 @@ def create_post():
 
     return render_template('create_post.html',
                            title='New Post',
-                           form=form,
-                           css_files=BASE_CSS_FILES + ['add_post'])
+                           form=form)
 
 
 # EDIT POST
@@ -182,6 +175,10 @@ def edit_post(id):
     post = db_sess.get(Post, id)
     if not post:
         return render_template('404.html')
+    
+    if current_user.id != post.user_id:
+        return render_template('401.html',
+                               title='401')
     
     form = AddPostForm()
     if form.validate_on_submit():
@@ -209,8 +206,7 @@ def edit_post(id):
 
     return render_template('create_post.html',
                            form=form,
-                           title='Edit post',
-                           css_files=BASE_CSS_FILES + ['add_post'])
+                           title='Edit post')
 
 
 # DETAILED POST VIEW
@@ -228,12 +224,12 @@ def post_detail(id):
 
 
 # MAIN PAGE
+@app.route('/')
 @app.route('/posts')
 def index():
     db_sess = db_session.create_session()
     all_posts = db_sess.query(Post).all()
     return render_template('main_screen.html',
-                           css_files=BASE_CSS_FILES + ['main_screen_style'],
                            posts=all_posts)
 
 

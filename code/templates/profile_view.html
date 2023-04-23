@@ -11,10 +11,10 @@
 {% endblock %}
 
 {% block left_button %}
-    <div class="nickname">
-        <h3>
-            {{ current_user.id }}
-        </h3>
+    <div class="left_buttons">
+        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
+            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
+        </a>
     </div>
 {% endblock %}
 
