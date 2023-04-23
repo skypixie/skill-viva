@@ -1,4 +1,22 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+
+{% block right_button %}
+    <div class="right_buttons">
+        <h3>
+            <a href="/new_post" class="head_link">
+                Написать пост
+            </a>
+        </h3>
+    </div>
+{% endblock %}
+
+{% block left_button %}
+    <div class="left_buttons">
+        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
+            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
+        </a>
+    </div>
+{% endblock %}
 
 {% block content %}
     <div class="main_screen">
@@ -60,11 +78,36 @@
         <!-- CONTENT -->
         <div class="contents">
             {% for post in posts %}
+                {% set topic = post.category_id %}
+
+                {% if topic == 1 %}
+                    {% set img_name = "programming.png" %}
+
+                {% elif topic == 2 %}
+                    {% set img_name = "design.png" %}
+
+                {% elif topic == 3 %}
+                    {% set img_name = "english_language.png" %}
+
+                {% elif topic == 4 %}
+                    {% set img_name = "science.png" %}
+
+                {% elif topic == 5 %}
+                    {% set img_name = "finance.png" %}
+
+                {% elif topic == 6 %}
+                    {% set img_name = "marketing.png" %}
+
+                {% elif topic == 7 %}
+                    {% set img_name = "jurisprudence.png" %}
+
+                {% endif %}
+
                 <div class="block_post">
                     <div class="header">
                         <h3>
-                            <a href="/post/{{ post.id }}" class="link">
-                                {{ post.header }}
+                            <a href="/posts/{{ post.id }}" class="link">
+                                {{ post.heading }}
                             </a>
                         </h3>
                     </div>
@@ -77,9 +120,7 @@
                             </h4>
                         </div>
                         <div class="topic">
-                            <h4>
-                                {{ post.category }}
-                            </h4>
+                            <img src="../static/img/{{ img_name }}" alt="Что-то пошло не так(">
                         </div>
                     </div>
                 </div>

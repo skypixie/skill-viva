@@ -36,6 +36,7 @@
 .info {
     display: flex;
     justify-content: space-between;
+    margin-top: 0.5%;
 }
 
 .author {
@@ -46,21 +47,6 @@
     display: inline;
     float: right;
     padding-right: 5%;
-    color: #828282;
-}
-
-.link {
-    text-decoration: none;
-    color: black;
-    transition: .3s;
-    background: linear-gradient(to right, black, black, black, black);
-    background-size: 0 3px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-}
-
-.link:hover {
-   background-size: 100% 3px;
 }
 
 #filter_button {

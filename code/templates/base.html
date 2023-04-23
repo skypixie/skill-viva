@@ -17,7 +17,17 @@
     <body>
         <!-- Navbar -->
         <div class="custom-navbar">
-            <h2 class="text-center">SkillViva</h2>
+            {% block right_button %}
+            {% endblock %}
+
+            <a href="/posts" class="head_link">
+                <h2 class="text-center">
+                    SkillViva
+                </h2>
+            </a>
+
+            {% block left_button %}
+            {% endblock %}
         </div>
 
         <div class="wrapper">

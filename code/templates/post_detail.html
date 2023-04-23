@@ -1,12 +1,37 @@
 {% extends 'base.html' %}
+
+{% block right_button %}
+    <div class="right_buttons">
+        <h3>
+            <a href="/new_post" class="head_link">
+                Написать пост
+            </a>
+        </h3>
+    </div>
+{% endblock %}
+
+{% block left_button %}
+    <div class="left_buttons">
+        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
+            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
+        </a>
+    </div>
+{% endblock %}
+
+
 {% block content %}
-<div class="post-detail">
-    <p>Автор: {{ post.user.nickname }}</p>
+    <div class="post-detail">
+        <div class="post_title">
+            <h2>{{ post.heading }}</h2>
+        </div>
 
-    <h2>{{ post.heading }}</h2>
-
-    <p>
-        {{ post.content }}
-    </p>
-</div>
+        <div class="post_content">
+            {{ post.content }}
+        </div>
+        <div class="post_author">
+            <h4>
+                    Автор: <a href="/profile/{{ post.user.nickname }}" class="link">{{ post.user.nickname }}</a>
+            </h4>
+        </div>
+    </div>
 {% endblock %}
