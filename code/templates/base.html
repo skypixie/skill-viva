@@ -7,11 +7,8 @@
       rel="stylesheet"
       integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ"
       crossorigin="anonymous">
-
-    {% for filename in css_files %}
-        <link href="{{ url_for('static', filename='css/' + filename + '.css') }}" rel="stylesheet">
-    {% endfor %}
     <link href="{{ url_for('static', filename='css/main_style.css') }}" rel="stylesheet">
+    {% block css %}{% endblock %}
     <title>{{ title }}</title>
     </head>
     <body>

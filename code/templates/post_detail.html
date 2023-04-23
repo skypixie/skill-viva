@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block css %}
+<link href="{{ url_for('static', filename='css/post_detail.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block right_button %}
     <div class="right_buttons">
         <h3>

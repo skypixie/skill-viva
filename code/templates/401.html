@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block right_button %}
+    <div class="right_buttons">
+        <h3>
+            <a href="/new_post" class="head_link">
+                Написать пост
+            </a>
+        </h3>
+    </div>
+{% endblock %}
+
+{% block left_button %}
+    <div class="left_buttons">
+        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
+            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
+        </a>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="d-flex align-items-center justify-content-center vh-100">
+    <div class="text-center">
+        <h1 class="display-1 fw-bold">401</h1>
+        <p class="fs-3"> <span class="text-danger">Opps!</span> Permission denied! </p>
+        <p class="lead">
+            You can't do dat...
+          </p>
+        <a href="/posts" class="btn btn-dark">Go Home</a>
+    </div>
+</div>
+{% endblock %}
