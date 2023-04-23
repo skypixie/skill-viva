@@ -32,15 +32,6 @@ html, body {
   align-items: center;
 }
 
-.img_profile {
-    float: left;
-    padding-right: 10px;
-}
-
-#link_with_img {
-    float: right;
-}
-
 .left_buttons {
     margin-right: 2%;
 }
@@ -61,4 +52,18 @@ html, body {
 
 .head_link:hover {
    background-size: 100% 4px;
+}
+
+.link {
+    text-decoration: none;
+    color: black;
+    transition: .3s;
+    background: linear-gradient(to right, black, black, black, black);
+    background-size: 0 3px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+}
+
+.link:hover {
+   background-size: 100% 3px;
 }

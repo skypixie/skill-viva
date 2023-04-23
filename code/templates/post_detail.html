@@ -12,11 +12,8 @@
 
 {% block left_button %}
     <div class="left_buttons">
-        <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
         <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
-            <h3>
-                Профиль
-            </h3>
+            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
         </a>
     </div>
 {% endblock %}
@@ -24,12 +21,17 @@
 
 {% block content %}
     <div class="post-detail">
-        <p>Автор: {{ post.user.nickname }}</p>
+        <div class="post_title">
+            <h2>{{ post.heading }}</h2>
+        </div>
 
-        <h2>{{ post.heading }}</h2>
-
-        <p>
+        <div class="post_content">
             {{ post.content }}
-        </p>
+        </div>
+        <div class="post_author">
+            <h4>
+                    Автор: <a href="/profile/{{ post.user.nickname }}" class="link">{{ post.user.nickname }}</a>
+            </h4>
+        </div>
     </div>
 {% endblock %}

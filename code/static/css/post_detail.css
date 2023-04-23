@@ -1,5 +1,19 @@
-.post-detail {
-    width: 80%;
-    border: 3px solid black;
-    border-radius: 50%;
+.post_title {
+    padding-bottom: 8px;
+    text-align: center;
+}
+
+.post_content {
+    margin-top: 1%;
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 25px;
+    border: 2px solid gray;
+    border-radius: 10px;
+}
+
+.post_author {
+    margin-left: 15%;
+    margin-top: 1%;
 }
