@@ -78,6 +78,31 @@
         <!-- CONTENT -->
         <div class="contents">
             {% for post in posts %}
+                {% set topic = post.category_id %}
+
+                {% if topic == 1 %}
+                    {% set img_name = "programming.png" %}
+
+                {% elif topic == 2 %}
+                    {% set img_name = "design.png" %}
+
+                {% elif topic == 3 %}
+                    {% set img_name = "english_language.png" %}
+
+                {% elif topic == 4 %}
+                    {% set img_name = "science.png" %}
+
+                {% elif topic == 5 %}
+                    {% set img_name = "finance.png" %}
+
+                {% elif topic == 6 %}
+                    {% set img_name = "marketing.png" %}
+
+                {% elif topic == 7 %}
+                    {% set img_name = "jurisprudence.png" %}
+
+                {% endif %}
+
                 <div class="block_post">
                     <div class="header">
                         <h3>
@@ -95,9 +120,7 @@
                             </h4>
                         </div>
                         <div class="topic">
-                            <h4>
-                                {{ post.category_id }}
-                            </h4>
+                            <img src="../static/img/{{ img_name }}" alt="Что-то пошло не так(">
                         </div>
                     </div>
                 </div>

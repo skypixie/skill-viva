@@ -36,6 +36,7 @@
 .info {
     display: flex;
     justify-content: space-between;
+    margin-top: 0.5%;
 }
 
 .author {
@@ -46,7 +47,6 @@
     display: inline;
     float: right;
     padding-right: 5%;
-    color: #828282;
 }
 
 #filter_button {
