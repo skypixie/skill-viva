@@ -16,7 +16,7 @@ from Text_Matching import TextMatching
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'liusEbvsdjvimglitching123jskebv'
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
+app.permanent_session_lifetime = datetime.timedelta(days=365)
 
 login_manager = LoginManager(app)
 login_manager.init_app(app)
