@@ -21,14 +21,6 @@ class PostResource(Resource):
         return jsonify(
             {'post': post.to_dict()}
         )
-    
-    def delete(self, id):
-        abort_if_post_not_found(id)
-        db_sess = create_session()
-        post = db_sess.get(Post, id)
-        db_sess.delete(post)
-        db_sess.commit()
-        return jsonify({'success': 'OK'})
 
 
 class PostListResource(Resource):
@@ -38,16 +30,3 @@ class PostListResource(Resource):
         return jsonify(
             {'posts': [post.to_dict() for post in posts]}
         )
-    
-    def post(self):
-        args = parser.parse_args()
-        db_sess = create_session()
-        new_post = Post(
-            user_id=args['user_id'],
-            heading=args['heading'],
-            content=args['content'],
-            category_id=args['category_id']
-        )
-        db_sess.add(new_post)
-        db_sess.commit()
-        return jsonify({'success': 'OK'})
