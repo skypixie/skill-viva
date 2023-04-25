@@ -34,58 +34,56 @@
     <div class="main_screen">
 
         <!-- FILTER -->
-        <div class="filter">
+        <form method="post" class="filter">
             <div class="header">
                 <h2>Фильтр</h2>
             </div>
             <div class="check_box_filter">
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="programmer">
+                    <input class="form-check-input" type="checkbox" value=1 id="programmer" name="filters">
                     <label class="form-check-label" for="programmer">
                         Программирование
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="design">
+                    <input class="form-check-input" type="checkbox" value=2 id="design" name="filters">
                     <label class="form-check-label" for="design">
                         Дизайн
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="english">
+                    <input class="form-check-input" type="checkbox" value=3 id="english" name="filters">
                     <label class="form-check-label" for="english">
                         Английский язык
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="science">
+                    <input class="form-check-input" type="checkbox" value=4 id="science" name="filters">
                     <label class="form-check-label" for="science">
                         Наука
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="finance">
+                    <input class="form-check-input" type="checkbox" value=5 id="finance" name="filters">
                     <label class="form-check-label" for="finance">
                         Финансы
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="marketing">
+                    <input class="form-check-input" type="checkbox" value=6 id="marketing" name="filters">
                     <label class="form-check-label" for="marketing">
                         Маркетинг
                     </label>
                 </div>
                 <div class="check_box">
-                    <input class="form-check-input" type="checkbox" value="" id="jurisprudence">
+                    <input class="form-check-input" type="checkbox" value=7 id="jurisprudence" name="filters">
                     <label class="form-check-label" for="jurisprudence">
                         Юриспруденция
                     </label>
                 </div>
             </div>
-            <button type="button" class="btn btn-dark" id="filter_button">
-                Применить фильтр
-            </button>
-        </div>
+            <input type="submit" class="filter_button" value="Применить">
+        </form>
 
         <!-- CONTENT -->
         <div class="contents">
