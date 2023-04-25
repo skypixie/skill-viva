@@ -34,6 +34,13 @@
 {% block content %}
     <div class="nickname">
         <h3>{{ user.nickname }}</h3>
+        {% if current_user.id == user.id %}
+            <div class="text-center">
+                <a href="/logout">
+                    <img src="../static/img/logout.png">
+                </a>
+            </div>
+        {% endif %}
     </div>
     <br>
     <!-- SAME CODE AS /POSTS HAS -->
@@ -90,11 +97,4 @@
             <p class="nickname"> У этого пользователя совсем нет постов...</p>
         {% endif %}
     </div>
-    {% if current_user.id == user.id %}
-            <div class="text-center">
-                <a href="/logout">
-                    <img src="../static/img/logout.png">
-                </a>
-            </div>
-    {% endif %}
 {% endblock %}

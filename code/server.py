@@ -44,9 +44,9 @@ CATEGORIES = [
 
 
 @login_manager.user_loader
-def load_user(user_id):
+def load_user(id):
     db_sess = db_session.create_session()
-    return db_sess.get(User, user_id)
+    return db_sess.get(User, id)
 
 
 # USER LOGOUT
@@ -245,6 +245,11 @@ def index():
         all_posts = SelectionOfPosts(filters).selection()
     return render_template('main_screen.html',
                            posts=all_posts)
+
+
+@app.errorhandler(401)
+def not_logined(error):
+    return render_template('401.html', title='401')
 
 
 if __name__ == '__main__':

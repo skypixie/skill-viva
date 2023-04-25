@@ -13,7 +13,7 @@ class Post(SqlAlchemyBase, SerializerMixin):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     
-    user = orm.relationship('User')
+    user = orm.relationship('User', lazy='subquery')
     user_id = sqlalchemy.Column(sqlalchemy.Integer,
                                 sqlalchemy.ForeignKey('users.id'))
     

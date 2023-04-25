@@ -1,22 +1,5 @@
 {% extends 'base.html' %}
 
-{% block right_button %}
-    <div class="right_buttons">
-        <h3>
-            <a href="/new_post" class="head_link">
-                Написать пост
-            </a>
-        </h3>
-    </div>
-{% endblock %}
-
-{% block left_button %}
-    <div class="left_buttons">
-        <a href="/profile/{{ current_user.id }}" class="head_link" id="link_with_img">
-            <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
-        </a>
-    </div>
-{% endblock %}
 
 {% block content %}
 <div class="d-flex align-items-center justify-content-center vh-100">
@@ -26,7 +9,7 @@
         <p class="lead">
             You can't do dat...
           </p>
-        <a href="/posts" class="btn btn-dark">Go Home</a>
+        <a href="/registrate" class="btn btn-dark">Registrate first</a>
     </div>
 </div>
 {% endblock %}
