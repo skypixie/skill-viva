@@ -70,3 +70,17 @@ html, body {
 .link:hover {
    background-size: 100% 3px;
 }
+
+.github_url {
+    both: clear;
+}
+
+.niobo {
+    float: left;
+    margin-right: 10%;
+}
+
+.GDcraft {
+    float: right;
+    margin-left: 10%;
+}
