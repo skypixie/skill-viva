@@ -232,7 +232,11 @@ def post_detail(id):
 
 
 # MAIN PAGE
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/')
+def empty():
+    return redirect('/posts')
+
+
 @app.route('/posts', methods=['GET', 'POST'])
 def index():
     all_posts = SelectionOfPosts([]).selection()
