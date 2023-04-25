@@ -222,7 +222,7 @@ def edit_post(id):
 @app.route('/posts/<int:id>')
 def post_detail(id):
     db_sess = db_session.create_session()
-    post = db_sess.query(Post).get(id)
+    post = db_sess.get(Post, id)
     if not post:
         return render_template('404.html', title='404')
     
