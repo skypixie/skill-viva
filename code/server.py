@@ -161,7 +161,6 @@ def create_post():
         new_post = Post(
             heading=form.heading.data,
             content=form.content.data,
-            user=current_user,
             user_id=current_user.id,
             category_id=category_id
         )
