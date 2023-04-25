@@ -1,0 +1,15 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "*.py",
+            "use": "@niobo/skill-viva"
+        }
+    ],
+    "routes": [
+        {
+            "src": "(.*)",
+            "dest": "server.py"
+        }
+    ]
+  } 
