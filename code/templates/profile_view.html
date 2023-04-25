@@ -40,7 +40,7 @@
     <div class="contents">
         {% if user.posts %}
             {% for post in user.posts %}
-                {% set published = post.published %}
+                {% set published = post.published.date() %}
                 {% set topic = post.category_id %}
 
                 {% if topic == 1 %}
