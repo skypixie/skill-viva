@@ -16,12 +16,11 @@
 
 {% block left_button %}
     <div class="left_buttons">
-        <img src="../static/img/img_profile.png" alt="Что-то пошло не так(" class="img_profile">
-        <a href="/login" class="head_link">
-            <h3>
+        <h3>
+            <a href="/login" class="head_link">
                 Войти
-            </h3>
-        </a>
+            </a>
+        </h3>
     </div>
 {% endblock %}
 
@@ -72,11 +71,6 @@
                     {{ error }}
                 </div>
             {% endfor %}
-        </p>
-
-        <!-- Remember me -->
-        <p>
-            {{ form.remember_me() }}{{ form.remember_me.label }}
         </p>
 
         <!-- Submit -->

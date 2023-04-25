@@ -49,8 +49,18 @@
     padding-right: 5%;
 }
 
-#filter_button {
+.filter_button {
+    border: 1px solid black;
+    background: black;
+    color: white;
+    transition: .3s;
     margin-left: 4%;
     margin-top: 7%;
     margin-bottom: 7%;
+}
+
+.filter_button:hover {
+    border: 1px solid white;
+    background: white;
+    color: black
 }

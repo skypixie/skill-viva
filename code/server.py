@@ -1,5 +1,5 @@
 import datetime
-from flask import Flask, render_template, redirect
+from flask import Flask, render_template, redirect, request
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from flask_restful import Api
 
@@ -14,6 +14,7 @@ from forms.login_form import LoginForm
 from forms.registration_form import RegistrationForm
 from forms.create_post import AddPostForm
 from Text_Matching import TextMatching
+from selection_of_posts import SelectionOfPosts
 
 # APP
 app = Flask(__name__)
@@ -233,11 +234,13 @@ def post_detail(id):
 
 
 # MAIN PAGE
-@app.route('/')
-@app.route('/posts')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/posts', methods=['GET', 'POST'])
 def index():
-    db_sess = db_session.create_session()
-    all_posts = db_sess.query(Post).all()
+    all_posts = SelectionOfPosts([]).selection()
+    if request.method == 'POST':
+        filters = list(map(int, request.form.getlist('filters')))
+        all_posts = SelectionOfPosts(filters).selection()
     return render_template('main_screen.html',
                            posts=all_posts)
 

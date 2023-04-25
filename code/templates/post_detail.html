@@ -33,31 +33,17 @@
 
 {% block content %}
     <div class="post-detail">
-        <!--  HEADING -->
         <div class="post_title">
             <h2>{{ post.heading }}</h2>
         </div>
 
-        <!--  CONTENT -->
         <div class="post_content">
             {{ post.content }}
         </div>
-
-        <!--  AUTHOR -->
         <div class="post_author">
             <h4>
                     Автор: <a href="/profile/{{ post.user.nickname }}" class="link">{{ post.user.nickname }}</a>
             </h4>
-        </div>
-
-        <!--  EDIT BUTTON -->
-        <div class="text-center">
-            {% if post.user.id == current_user.id %}
-                <a href="/edit_post/{{ post.id }}">
-                    <img src="../static/img/edit.png">
-                    Редактировать
-                </a>
-            {% endif %}
         </div>
     </div>
 {% endblock %}
