@@ -220,7 +220,6 @@ def edit_post(id):
 
 # DETAILED POST VIEW
 @app.route('/posts/<int:id>')
-@login_required
 def post_detail(id):
     db_sess = db_session.create_session()
     post = db_sess.query(Post).get(id)
