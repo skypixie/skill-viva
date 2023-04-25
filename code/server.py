@@ -141,13 +141,13 @@ def create_post():
 
     if form.validate_on_submit():
 
-        text_matcher = TextMatching(api_key='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',
+        text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
-                                    topic=form.category.data)
-        
+                                    topic=form.heading.data)
+        print(text_matcher.matching())
         # check via chat-gpt
         try:
-            if text_matcher.matching().lower() == 'нет':
+            if text_matcher.matching().lower().split() in [['нет.'], ['нет']]:
                 return render_template('create_post.html',
                                        message='Текст не соответствует выбранной категории.',
                                        form=form)

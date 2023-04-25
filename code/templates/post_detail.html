@@ -51,10 +51,12 @@
         <!--  EDIT BUTTON -->
         <div class="text-center">
             {% if post.user.id == current_user.id %}
-                <a href="/edit_post/{{ post.id }}">
-                    <img src="../static/img/edit.png">
-                    Редактировать
-                </a>
+                <img src="../static/img/edit.png">
+                <h4>
+                    <a href="/edit_post/{{ post.id }}" class="link">
+                        Редактировать
+                    </a>
+                </h4>
             {% endif %}
         </div>
     </div>
