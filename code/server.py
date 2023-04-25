@@ -1,8 +1,10 @@
 import datetime
 from flask import Flask, render_template, redirect
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from flask_restful import Api
 
 import support
+from data.resources import post_resources
 
 from data import db_session
 from data.users import User
@@ -13,13 +15,20 @@ from forms.registration_form import RegistrationForm
 from forms.create_post import AddPostForm
 from Text_Matching import TextMatching
 
-
+# APP
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'liusEbvsdjvimglitching123jskebv'
-app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(days=365)
+app.permanent_session_lifetime = datetime.timedelta(days=365)
 
+# LOGIN
 login_manager = LoginManager(app)
 login_manager.init_app(app)
+
+
+# API
+api = Api(app)
+api.add_resource(post_resources.PostListResource, '/api/posts')
+api.add_resource(post_resources.PostResource, '/api/posts/<int:id>')
 
 BASE_CSS_FILES = ['main_style']
 CATEGORIES = [

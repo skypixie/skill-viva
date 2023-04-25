@@ -1,12 +1,13 @@
 import datetime
 import sqlalchemy
 from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
 from .db_session import SqlAlchemyBase
 
 
 # Таблица постов пользователей
 # Поля: id, user_id, published, heading, content
-class Post(SqlAlchemyBase):
+class Post(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'posts'
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
@@ -21,3 +22,5 @@ class Post(SqlAlchemyBase):
     content = sqlalchemy.Column(sqlalchemy.String, nullable=False)
     category_id = sqlalchemy.Column(sqlalchemy.Integer,
                                  sqlalchemy.ForeignKey('categories.id'))
+    
+    serialize_rules =  ('-user',)
