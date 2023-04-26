@@ -126,11 +126,13 @@ def registrate():
 def profile(nickname):
     db_sess = db_session.create_session()
     user = db_sess.query(User).filter(User.nickname == nickname).first()
+    posts = reversed(user.posts)
     if not user:
         return render_template('404.html', title='404')
     return render_template('profile_view.html',
                            title=f'@{nickname}',
-                           user=user)
+                           user=user,
+                           posts=posts)
 
 
 # CREATE A POST
@@ -141,15 +143,14 @@ def create_post():
 
     if form.validate_on_submit():
 
-        text_matcher = TextMatching(api_key='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',
+        text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
                                     topic=form.heading.data)
-        print(text_matcher.matching())
         # check via chat-gpt
         try:
             if text_matcher.matching().lower().split() in [['нет.'], ['нет']]:
                 return render_template('create_post.html',
-                                       message='Текст не соответствует выбранной категории.',
+                                       message='Текст не соответствует выбранной теме.',
                                        form=form)
         except Exception:
             pass
@@ -191,22 +192,23 @@ def edit_post(id):
     
     form = AddPostForm()
     if form.validate_on_submit():
-        text_matcher = TextMatching(api_key='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',
-                                    user_text=form.content.data,
-                                    topic=form.category.data)
+
+        text_matcher = TextMatching(api_key='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',
+                                  user_text=form.content.data,
+                                  topic=form.heading.data)
         # check via chat-gpt
         try:
-            if text_matcher.matching().lower() == 'нет':
+            if text_matcher.matching().lower().split() in [['нет.'], ['нет']]:
                 return render_template('create_post.html',
-                                       message='Текст не соответствует выбранной категории.',
+                                       message='Текст не соответствует выбранной теме.',
                                        form=form)
         except Exception:
-            pass
+           pass
         post.category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
         post.heading = form.heading.data
         post.content = form.content.data
         db_sess.commit()
-        
+
         return redirect('/posts')
 
     form.heading.data = post.heading

@@ -22,7 +22,7 @@ class SelectionOfPosts:
     def selection(self):
         db_sess = db_session.create_session()
         if not self.filters:
-            posts = db_sess.query(Post).all()
+            posts = list(reversed(db_sess.query(Post).all()))
         else:
             posts = db_sess.query(Post).filter(Post.category_id.in_(self.filters))
 

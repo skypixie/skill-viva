@@ -19,7 +19,7 @@
     <!-- SAME CODE AS /POSTS HAS -->
     <div class="contents">
         {% if user.posts %}
-            {% for post in user.posts %}
+            {% for post in posts %}
                 {% set published = post.published.date() %}
                 {% set topic = post.category_id %}
 
