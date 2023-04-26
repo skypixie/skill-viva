@@ -3,7 +3,7 @@ from flask import jsonify
 
 from ..db_session import create_session
 from ..posts import Post
-from .parser import parser
+from .parser import parser # для дальнейшей реализации добавления постов
 
 
 def abort_if_post_not_found(id):
