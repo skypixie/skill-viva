@@ -19,6 +19,7 @@ def global_init(db_file):
         raise Exception("Необходимо указать файл базы данных.")
 
     conn_str = f'sqlite:///{db_file.strip()}?check_same_thread=False'
+    # [note] Видимо print служебной информации, его лучше убрать
     print(conn_str)
 
     engine = sa.create_engine(conn_str, echo=False)

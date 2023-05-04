@@ -8,6 +8,12 @@ class SelectionOfPosts:
         self.filters = filters
 
     def random_selection_of_posts(self, posts, quantity):
+        '''
+        Всю функцию можно написать в 1 строку :)
+        return random.sample(posts, quantity)
+
+        P.S. Мог поставить больше за чистоту кода, но тогда уменьшил бы размер кода
+        '''
         use_index = []
         ans = []
         for i in range(quantity):
@@ -26,9 +32,13 @@ class SelectionOfPosts:
         else:
             posts = db_sess.query(Post).filter(Post.category_id.in_(self.filters))
 
-        current_posts = posts[:40]  # Остается только 30
-        other_posts = posts[40:]  # Остается только 20
+        current_posts = posts[:40]  # Остается только 30 - не понял)
+        other_posts = posts[40:]  # Остается только 20 - и это тоже)
         total_number_of_relevant_posts = int(len(current_posts) * 0.75)
+        '''
+        Внизу происходит что-то страшное. Явно можно было написать короче, как минимум тернраниками
+        или же не делать два if'а для проверки одного и того же условия total_number_of_relevant_posts == 30
+        '''
         if total_number_of_relevant_posts == 30:
             random_relevant_posts = self.random_selection_of_posts(current_posts, total_number_of_relevant_posts)
         else:

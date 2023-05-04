@@ -25,7 +25,6 @@ app.permanent_session_lifetime = datetime.timedelta(days=365)
 login_manager = LoginManager(app)
 login_manager.init_app(app)
 
-
 # API
 api = Api(app)
 api.add_resource(post_resources.PostListResource, '/api/posts')
@@ -41,6 +40,12 @@ CATEGORIES = [
         'Маркетинг',
         'Юриспруденция',
     ]
+
+'''
+Сказал ещё на защите, что лучше не называть переменные так же, 
+как и встроенные в язык функции (в данном случае id и id())
+В какой-то момент можно случайно вызвать id как функцию и проиграть
+'''
 
 
 @login_manager.user_loader
@@ -69,7 +74,7 @@ def login():
         if user and user.check_password(form.password.data):
             login_user(user, remember=form.remember_me.data)
             return redirect('/posts')
-        
+
         # email not found or wrong password
         return render_template('login.html',
                                message='Неправильный логин или пароль',
@@ -99,13 +104,13 @@ def registrate():
                                    title='Регистрация',
                                    message='Такой email уже существует',
                                    form=form)
-        
+
         if db_sess.query(User).filter(User.nickname == form.nickname.data).first():
             return render_template('register.html',
                                    title='Регистрация',
                                    message='Такой nickname уже существует',
                                    form=form)
-        
+
         user.nickname = form.nickname.data
         user.email = form.email.data
         user.set_password(form.password.data)
@@ -114,7 +119,7 @@ def registrate():
         db_sess.commit()
 
         return redirect('/login')
-        
+
     return render_template('register.html',
                            title='Регистрация',
                            form=form)
@@ -142,17 +147,34 @@ def create_post():
     form = AddPostForm()
 
     if form.validate_on_submit():
-
+        '''
+        [note] Лично мне больше нравится подход, когда всякие данные по типу API-ключей,
+        логинов, паролей лежат в отдельном файлике и берутся программой из файла, т.к. это
+        безопасней
+        '''
         text_matcher = TextMatching(api_key='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',
                                     user_text=form.content.data,
                                     topic=form.heading.data)
         # check via chat-gpt
+        '''
+        Проблемы с API ключом(
+        Пишет "Incorrect API key provided", но по логике должно работать
+        '''
+
         try:
+            '''
+            Если сделать 1000 проверок, сделается 1000 временных списков [['нет.'], ['нет']] 
+            (которые, конечно, потом удаляться garbadge collector'ом)
+            Кажется, лучше создать какой-нибудь список correct_answers и проверять по нему
+            '''
             if text_matcher.matching().lower().split() in [['нет.'], ['нет']]:
                 return render_template('create_post.html',
                                        message='Текст не соответствует выбранной теме.',
                                        form=form)
         except Exception:
+            '''
+            Лучше хотя бы логировать ошибку, чтобы потом можно было её увидеть и пофиксить
+            '''
             pass
 
         db_sess = db_session.create_session()
@@ -185,17 +207,17 @@ def edit_post(id):
     post = db_sess.get(Post, id)
     if not post:
         return render_template('404.html')
-    
+
     if current_user.id != post.user_id:
         return render_template('401.html',
                                title='401')
-    
+
     form = AddPostForm()
     if form.validate_on_submit():
 
         text_matcher = TextMatching(api_key='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',
-                                  user_text=form.content.data,
-                                  topic=form.heading.data)
+                                    user_text=form.content.data,
+                                    topic=form.heading.data)
         # check via chat-gpt
         try:
             if text_matcher.matching().lower().split() in [['нет.'], ['нет']]:
@@ -203,7 +225,7 @@ def edit_post(id):
                                        message='Текст не соответствует выбранной теме.',
                                        form=form)
         except Exception:
-           pass
+            pass
         post.category_id = db_sess.query(Category).filter(Category.category == form.category.data).first().id
         post.heading = form.heading.data
         post.content = form.content.data
@@ -221,13 +243,18 @@ def edit_post(id):
 
 
 # DETAILED POST VIEW
+'''
+Уже писал про id
+'''
+
+
 @app.route('/posts/<int:id>')
 def post_detail(id):
     db_sess = db_session.create_session()
     post = db_sess.get(Post, id)
     if not post:
         return render_template('404.html', title='404')
-    
+
     return render_template('post_detail.html',
                            title=post.heading,
                            post=post)
@@ -255,6 +282,14 @@ def not_logined(error):
 
 
 if __name__ == '__main__':
+    '''
+    Немного проблемы со структурой проекта: 
+    папка db ищется в том же каталоге, где и файл server.py, но db находится на уровень выше
+    из-за этого database.db не может быть найдена. 
+    Надо было аккуратней обработать загрузку бд
+    '''
+    # [note] Лучше использовать для путей так называемые "сырые" строки
+    # (https://pythonist.ru/syrye-stroki-i-strokovye-literaly/)
     db_session.global_init('db/database.db')
 
     # inserting all categories into the database

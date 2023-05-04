@@ -6,6 +6,7 @@ from ..posts import Post
 from .parser import parser # для дальнейшей реализации добавления постов
 
 
+# Про id уже писал
 def abort_if_post_not_found(id):
     db_sess = create_session()
     post = db_sess.get(Post, id)
@@ -30,3 +31,5 @@ class PostListResource(Resource):
         return jsonify(
             {'posts': [post.to_dict() for post in posts]}
         )
+
+# Сделать своё API - очень круто
